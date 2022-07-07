@@ -2,6 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
+from sqlalchemy import asc
 from preprocessing import preprocessing
 import plotly.express as px
 import pandas as pd
@@ -9,7 +10,7 @@ import pandas as pd
 app = dash.Dash(
     __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
 )
-data = preprocessing()
+date, data = preprocessing()
 server = app.server
 
 '''app.layout = html.Div([
@@ -79,7 +80,7 @@ app.layout = html.Div(
                                     children=[
                                         html.H6("게임 유형"),
                                         dcc.RadioItems(
-                                            id="chart-type",
+                                            id="game-type",
                                             options=[
                                                 {"label": "솔로", "value": "솔로"},
                                                 {
@@ -89,7 +90,25 @@ app.layout = html.Div(
                                                 {'label': '스쿼드',
                                                  'value': '스쿼드'}
                                             ],
-                                            value="solo",
+                                            value="솔로",
+                                            labelStyle={
+                                                "display": "inline-block",
+                                                "padding": "12px 12px 12px 0px",
+                                            },
+                                        ),
+                                    ],
+                                ),
+                                 html.Div(
+                                    className="padding-top-bot",
+                                    children=[
+                                        html.H6("랭크 유형"),
+                                        dcc.RadioItems(
+                                            id="rank-type",
+                                            options=[
+                                                {"label": "전체", "value": "all"},
+                                                {"label": "탑1000", "value": "top",}
+                                            ],
+                                            value="all",
                                             labelStyle={
                                                 "display": "inline-block",
                                                 "padding": "12px 12px 12px 0px",
@@ -122,12 +141,21 @@ app.layout = html.Div(
 
 @app.callback(
     Output('plot', 'figure'),
-    Input('cat-dropdown', 'value')
+    [Input('cat-dropdown', 'value'),
+     Input('game-type', 'value'),
+     Input('rank-type', 'value')]
 )
-def update_figure(category):
-    df = pd.concat([data[category].iloc[:,0], data['캐릭터-무기']], axis=1)
-    fig = px.bar(df, x='캐릭터-무기', y=category)
+def update_figure(category, gametype, ranktype):
+    type_dict = {'솔로': 0,
+                 '듀오': 1,
+                 '스쿼드': 2}
+    df = pd.concat([data[category].iloc[:,type_dict[gametype]], data['캐릭터-무기']], axis=1)
+    df = df.sort_values(by=[category])
+    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text_auto=True,
+                 title=date, height=1500)
     fig.update_layout(transition_duration=500)
+    fig.update_xaxes(showticklabels=False)
+    fig.update_traces(textposition = 'outside')
     return fig
     
 

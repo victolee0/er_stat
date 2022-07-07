@@ -73,4 +73,4 @@ def preprocessing():
     data = data.fillna(method='ffill')
     data['캐릭터-무기'] = data['캐릭터'] + '-' + data['숙련도']
     data['캐릭터-무기'] = data['캐릭터-무기'].fillna('평균')
-    return data
+    return collecting_date, data
