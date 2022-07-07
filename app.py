@@ -30,14 +30,11 @@ server = app.server
 app = dash.Dash(__name__)
 app.layout = html.Div(
     children=[
-        # Error Message
-        html.Div(id="error-message"),
-
         # Top Banner
         html.Div(
             className="er-stat-banner row",
             children=[
-                html.H2(className="h2-title", children="ER STAT BROWSER"),
+                html.H2(className="h2-title", children="ER STAT", style={'color': '#ffffff'}),
                 #html.Div(
                 #    className="div-logo",
                 #    children=html.Img(
@@ -45,9 +42,9 @@ app.layout = html.Div(
                 #    ),
                 #),
                 #html.H2(className="h2-title-mobile", children="ER STAT BROWSER"),
-            ],
+            ], style={'backgroundColor': '#3858cf'}
         ),
-        
+
         # Body of the App
         html.Div(
             className="row app-body",
@@ -62,7 +59,7 @@ app.layout = html.Div(
                                 html.Div(
                                     className="padding-top-bot",
                                     children=[
-                                        html.H6("카테고리"),
+                                        html.H4("카테고리"),
                                         dcc.Dropdown(id="cat-dropdown",
                                                      options=[{'label': '승률',
                                                                'value': '승률'},
@@ -78,7 +75,7 @@ app.layout = html.Div(
                                 html.Div(
                                     className="padding-top-bot",
                                     children=[
-                                        html.H6("게임 유형"),
+                                        html.H4("게임 유형"),
                                         dcc.RadioItems(
                                             id="game-type",
                                             options=[
@@ -93,7 +90,7 @@ app.layout = html.Div(
                                             value="솔로",
                                             labelStyle={
                                                 "display": "inline-block",
-                                                "padding": "12px 12px 12px 0px",
+                                                "padding": "0px 12px 0px 12px",
                                             },
                                         ),
                                     ],
@@ -101,7 +98,7 @@ app.layout = html.Div(
                                  html.Div(
                                     className="padding-top-bot",
                                     children=[
-                                        html.H6("랭크 유형"),
+                                        html.H4("랭크 유형"),
                                         dcc.RadioItems(
                                             id="rank-type",
                                             options=[
@@ -111,7 +108,7 @@ app.layout = html.Div(
                                             value="all",
                                             labelStyle={
                                                 "display": "inline-block",
-                                                "padding": "12px 12px 12px 0px",
+                                                "padding": "0px 12px 0px 12px",
                                             },
                                         ),
                                     ],
@@ -127,7 +124,7 @@ app.layout = html.Div(
                         html.Div(
                             className="bg-white",
                             children=[
-                                html.H5("stat plot"),
+                                html.H4("stat plot"),
                                 dcc.Graph(id="plot"),
                             ],
                         )
@@ -136,7 +133,7 @@ app.layout = html.Div(
                 dcc.Store(id="error", storage_type="memory"),
             ],
         ),
-    ]
+    ], style={"padding": "0px 50em 0x 50em"}
 )
 
 @app.callback(
@@ -145,6 +142,8 @@ app.layout = html.Div(
      Input('game-type', 'value'),
      Input('rank-type', 'value')]
 )
+
+#todo: ranktype, heroku deploy, footer
 def update_figure(category, gametype, ranktype):
     type_dict = {'솔로': 0,
                  '듀오': 1,
@@ -157,7 +156,7 @@ def update_figure(category, gametype, ranktype):
     fig.update_xaxes(showticklabels=False)
     fig.update_traces(textposition = 'outside')
     return fig
-    
+
 
 if __name__ == "__main__":
     app.run_server(debug=True)
