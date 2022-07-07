@@ -1,13 +1,15 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Input, Output, State
 from preprocessing import preprocessing
 import plotly.express as px
+import pandas as pd
 
 app = dash.Dash(
     __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
 )
-
+data = preprocessing()
 server = app.server
 
 '''app.layout = html.Div([
@@ -62,14 +64,14 @@ app.layout = html.Div(
                                         html.H6("카테고리"),
                                         dcc.Dropdown(id="cat-dropdown",
                                                      options=[{'label': '승률',
-                                                               'value': 'win_rate'},
+                                                               'value': '승률'},
                                                               {'label': '픽률',
-                                                              'value': 'pick_rate'},
+                                                              'value': '픽률'},
                                                               {'label': '평균 킬',
-                                                              'value': 'avg_kill'},
+                                                              'value': '평균 킬'},
                                                               {'label':'평균 순위',
-                                                              'value': 'avg_rank'}],
-                                                     value='win_rate'),
+                                                              'value': '평균 순위'}],
+                                                     value='승률'),
                                     ],
                                 ),
                                 html.Div(
@@ -79,13 +81,13 @@ app.layout = html.Div(
                                         dcc.RadioItems(
                                             id="chart-type",
                                             options=[
-                                                {"label": "솔로", "value": "solo"},
+                                                {"label": "솔로", "value": "솔로"},
                                                 {
                                                     "label": "듀오",
-                                                    "value": "duo",
+                                                    "value": "듀오",
                                                 },
                                                 {'label': '스쿼드',
-                                                 'value': 'squad'}
+                                                 'value': '스쿼드'}
                                             ],
                                             value="solo",
                                             labelStyle={
@@ -118,7 +120,16 @@ app.layout = html.Div(
     ]
 )
 
-
+@app.callback(
+    Output('plot', 'figure'),
+    Input('cat-dropdown', 'value')
+)
+def update_figure(category):
+    df = pd.concat([data[category].iloc[:,0], data['캐릭터-무기']], axis=1)
+    fig = px.bar(df, x='캐릭터-무기', y=category)
+    fig.update_layout(transition_duration=500)
+    return fig
+    
 
 if __name__ == "__main__":
     app.run_server(debug=True)
