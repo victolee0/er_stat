@@ -11,6 +11,7 @@ app = dash.Dash(
 )
 
 crawl_data = crawl()
+print("Load data success.")
 server = app.server
 
 '''app.layout = html.Div([
@@ -149,6 +150,7 @@ def update_figure(category, gametype, ranktype):
                  '스쿼드': 2}
     
     date, data = preprocessing(crawl_data, ranktype)
+    print("data preprocessing success")
     df = pd.concat([data[category].iloc[:,type_dict[gametype]], data['캐릭터-무기']], axis=1)
     df = df.sort_values(by=[category])
     fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text_auto=True,
@@ -156,8 +158,9 @@ def update_figure(category, gametype, ranktype):
     fig.update_layout(transition_duration=500)
     fig.update_xaxes(showticklabels=False)
     fig.update_traces(textposition = 'outside')
+    print('update plot')
     return fig
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server()
