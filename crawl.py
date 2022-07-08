@@ -1,11 +1,14 @@
 from selenium import webdriver
-from bs4 import BeautifulSoup as bs
 import pandas as pd
+import os
 
 def crawl():
     options = webdriver.ChromeOptions()
-    options.add_argument('headless')
-    d = webdriver.Chrome('C:/chromedriver.exe', chrome_options=options)
+    options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    options.add_argument('--headless')
+    d = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
 
     d.get('https://playeternalreturn.com/stats?hl=ko-KR')
     d.implicitly_wait(3)

@@ -1,6 +1,4 @@
 import pandas as pd
-from crawl import crawl
-import numpy as np
 
 def preprocessing(df, ranktype):
     name_weapon = {

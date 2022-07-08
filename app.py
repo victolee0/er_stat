@@ -1,8 +1,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State
-from sqlalchemy import asc
+from dash.dependencies import Input, Output
 from preprocessing import preprocessing
 import plotly.express as px
 import pandas as pd
@@ -35,15 +34,15 @@ app.layout = html.Div(
         html.Div(
             className="er-stat-banner row",
             children=[
-                html.H2(className="h2-title", children="ER STAT", style={'color': '#ffffff'}),
+                html.H2(className="h2-title", children="ER STAT"),
                 #html.Div(
                 #    className="div-logo",
                 #    children=html.Img(
                 #        className="logo", src=app.get_asset_url("dash-logo-new.png")
                 #    ),
                 #),
-                #html.H2(className="h2-title-mobile", children="ER STAT BROWSER"),
-            ], style={'backgroundColor': '#3858cf'}
+                html.H2(className="h2-title-mobile", children="ER STAT"),
+            ],
         ),
 
         # Body of the App
@@ -91,7 +90,7 @@ app.layout = html.Div(
                                             value="솔로",
                                             labelStyle={
                                                 "display": "inline-block",
-                                                "padding": "0px 12px 0px 12px",
+                                                "padding": "12px 12px 12px 0px",
                                             },
                                         ),
                                     ],
@@ -109,7 +108,7 @@ app.layout = html.Div(
                                             value="all",
                                             labelStyle={
                                                 "display": "inline-block",
-                                                "padding": "0px 12px 0px 12px",
+                                                "padding": "12px 12px 12px 0px",
                                             },
                                         ),
                                     ],
@@ -123,9 +122,8 @@ app.layout = html.Div(
                     className="eight columns card-left",
                     children=[
                         html.Div(
-                            className="bg-white",
+                            className="bg-white-plot",
                             children=[
-                                html.H4("stat plot"),
                                 dcc.Graph(id="plot"),
                             ],
                         )
@@ -134,7 +132,7 @@ app.layout = html.Div(
                 dcc.Store(id="error", storage_type="memory"),
             ],
         ),
-    ], style={"padding": "0px 50em 0x 50em"}
+    ]
 )
 
 @app.callback(
@@ -144,7 +142,7 @@ app.layout = html.Div(
      Input('rank-type', 'value')]
 )
 
-#todo: ranktype, heroku deploy, footer
+#todo: heroku deploy, footer
 def update_figure(category, gametype, ranktype):
     type_dict = {'솔로': 0,
                  '듀오': 1,
