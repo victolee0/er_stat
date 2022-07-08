@@ -14,20 +14,7 @@ crawl_data = crawl()
 print("Load data success.")
 server = app.server
 
-'''app.layout = html.Div([
-    html.Div(children=[
-        html.Label('항목'),
-        dcc.Dropdown(
-            ['승률', '픽률', '평균 킬', '평균 순위'],
-            '평균 킬'),
-        html.Br(),
-        html.Label('게임 유형'),
-        dcc.Dropdown(
-            ['솔로', '듀오', '스쿼드'],
-            ['솔로'], multi=True)
-    ], style={'padding': 10, 'flex': 1})
-], style={'padding': 10, 'flex': 1})
-'''
+
 app = dash.Dash(__name__)
 app.layout = html.Div(
     children=[
@@ -163,4 +150,4 @@ def update_figure(category, gametype, ranktype):
 
 
 if __name__ == "__main__":
-    app.run_server()
+    app.run_server(debug=True)
