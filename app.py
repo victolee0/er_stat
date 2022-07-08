@@ -13,9 +13,9 @@ app = dash.Dash(
 crawl_data = crawl()
 print("Load data success.")
 server = app.server
+print("Define flask server")
 
 
-app = dash.Dash(__name__)
 app.layout = html.Div(
     children=[
         # Top Banner
