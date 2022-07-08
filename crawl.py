@@ -9,7 +9,7 @@ def crawl():
     options.add_argument("--no-sandbox")
     options.add_argument('--headless')
     d = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
-
+    
     d.get('https://playeternalreturn.com/stats?hl=ko-KR')
     d.implicitly_wait(3)
     x = d.find_element_by_tag_name('iframe')
