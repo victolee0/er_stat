@@ -6,11 +6,12 @@ from sqlalchemy import asc
 from preprocessing import preprocessing
 import plotly.express as px
 import pandas as pd
-
+from crawl import crawl
 app = dash.Dash(
     __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
 )
-date, data = preprocessing()
+
+crawl_data = crawl()
 server = app.server
 
 '''app.layout = html.Div([
@@ -148,6 +149,8 @@ def update_figure(category, gametype, ranktype):
     type_dict = {'솔로': 0,
                  '듀오': 1,
                  '스쿼드': 2}
+    
+    date, data = preprocessing(crawl_data, ranktype)
     df = pd.concat([data[category].iloc[:,type_dict[gametype]], data['캐릭터-무기']], axis=1)
     df = df.sort_values(by=[category])
     fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text_auto=True,

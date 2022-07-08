@@ -2,7 +2,7 @@ import pandas as pd
 from crawl import crawl
 import numpy as np
 
-def preprocessing():
+def preprocessing(df, ranktype):
     name_weapon = {
         '평균': ['평균'],
         '아델라': ['레이피어'],
@@ -63,12 +63,13 @@ def preprocessing():
     total_range = 0
     for i in name_weapon:
         total_range += len(name_weapon[i])
-    total_range
 
-    df = crawl()
     collecting_date = df.iloc[4, 4]
     colnames = df.iloc[8, 2:19].values
-    data = df.iloc[9:9+total_range+1, 2:19]
+    if ranktype == 'all':
+        data = df.iloc[9:9+total_range+1, 2:19]
+    else:
+        data = df.iloc[9+total_range+7: 9+2*total_range+8, 2:19]
     data.columns = colnames
     data = data.fillna(method='ffill')
     data['캐릭터-무기'] = data['캐릭터'] + '-' + data['숙련도']
