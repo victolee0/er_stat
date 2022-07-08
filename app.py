@@ -145,7 +145,7 @@ def update_figure(category, gametype, ranktype):
         df[category] = df[category].apply(lambda x: str(x) + '%')
     else:
         df = df.sort_values(by=[category])
-    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text_auto=True,
+    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category,
                  title=date, height=1500)
     fig.update_layout(transition_duration=500)
     fig.update_xaxes(showticklabels=False)
