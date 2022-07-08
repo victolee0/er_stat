@@ -10,7 +10,7 @@ body{
 }
 
 .er-stat-banner {
-  background: rgb(2,21,70);
+  background: rgb(90,100,236);
   color: white;
   padding: 12px;
   padding-left: 48px;
@@ -94,7 +94,7 @@ h5{
 }
 
 .Select-control{
-  border: 1px solid #203cb3;
+  border: 1px solid #000000;
 }
 
 @media only screen and (max-width: 320px){
