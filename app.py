@@ -142,7 +142,7 @@ def update_figure(category, gametype, ranktype):
     if category in ['승률', '픽률']:
         df[category] = df[category].apply(lambda x: float(x.split('%')[0]))
         df = df.sort_values(by=[category])
-        df[category] = df[category].apply(lambda x: x + '%')
+        df[category] = df[category].apply(lambda x: str(x) + '%')
     else:
         df = df.sort_values(by=[category])
     fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text_auto=True,
