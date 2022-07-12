@@ -149,14 +149,14 @@ def update_figure(category, gametype, ranktype):
     colors = df['캐릭터-무기'].apply(lambda x: 'green' if x == '평균' else '636efa')
     
     fig = go.Figure(data=go.Bar(
-        x=df['category'], y=df['캐릭터-무기'], orientation='h', text=df['category'], title=date, height=1500, marker_color=colors
+        x=df['category'], y=df['캐릭터-무기'], orientation='h', marker_color=colors
         )
     )
     
 #    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category, marker_color=colors,
 #                 title=date, height=1500)
     
-    fig.update_layout(transition_duration=500)
+    fig.update_layout(transition_duration=500, text=df['category'], title=date, height=1500)
     fig.update_xaxes(showticklabels=False)
     fig.update_traces(textposition = 'outside')
     print('update plot')
