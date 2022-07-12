@@ -139,16 +139,15 @@ def update_figure(category, gametype, ranktype):
     date, data = preprocessing(crawl_data, ranktype)
     print("data preprocessing success")
     df = pd.concat([data[category].iloc[:,type_dict[gametype]], data['캐릭터-무기']], axis=1)
+    df = df[df[category] != 0]
     if category in ['승률', '픽률']:
         df[category] = df[category].apply(lambda x: float(x.split('%')[0]))
         df = df.sort_values(by=[category])
         df[category] = df[category].apply(lambda x: str(x) + '%')
     elif category == '평균 순위':
         df[category] = df[category].astype(float)
-        tmp = df[df[category]!=0]
-        tmp_zero = df[df[category]==0]
-        tmp = tmp.sort_values(by=[category], ascending=False)
-        df = pd.concat([tmp, tmp_zero], axis=0, sort=False, ignore_index=True)
+        df = df.sort_values(by=[category], ascending=False)
+        
     else:
         df = df.sort_values(by=[category])
     colors = df['캐릭터-무기'].apply(lambda x: '#0abab5' if x == '평균' else '#636efa')
