@@ -147,9 +147,8 @@ def update_figure(category, gametype, ranktype):
         df[category] = df[category].astype(float)
         tmp = df[df[category]!=0]
         tmp_zero = df[df[category]==0]
-        print(tmp.shape, tmp_zero.shape)
         tmp = tmp.sort_values(by=[category], ascending=False)
-        df = pd.concat([tmp, tmp_zero], axis=0)
+        df = pd.concat([tmp, tmp_zero], axis=0, sort=False)
     else:
         df = df.sort_values(by=[category])
     colors = df['캐릭터-무기'].apply(lambda x: '#0abab5' if x == '평균' else '#636efa')
