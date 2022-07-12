@@ -144,6 +144,8 @@ def update_figure(category, gametype, ranktype):
         df[category] = df[category].apply(lambda x: float(x.split('%')[0]))
         df = df.sort_values(by=[category])
         df[category] = df[category].apply(lambda x: str(x) + '%')
+    elif category == '평균 순위':
+        df = df.sort_values(by=[category], ascending=False)
     else:
         df = df.sort_values(by=[category])
     colors = df['캐릭터-무기'].apply(lambda x: '#F0C522' if x == '평균' else '#636efa')
