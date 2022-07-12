@@ -10,7 +10,7 @@ from crawl import crawl
 app = dash.Dash(
     __name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
 )
-
+app.title = "ER STAT"
 crawl_data = crawl()
 print("Load data success.")
 server = app.server
@@ -19,7 +19,6 @@ print("Define flask server")
 
 app.layout = html.Div(
     children=[
-        html.Title(children="ER-STAT"),
         # Top Banner
         html.Div(
             className="er-stat-banner row",
