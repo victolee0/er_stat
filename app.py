@@ -131,7 +131,7 @@ app.layout = html.Div(
      Input('rank-type', 'value')]
 )
 
-#todo: avg bar, footer
+#todo: page title, footer
 def update_figure(category, gametype, ranktype):
     type_dict = {'솔로': 0,
                  '듀오': 1,
