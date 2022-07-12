@@ -4,6 +4,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 from preprocessing import preprocessing
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 from crawl import crawl
 app = dash.Dash(
@@ -147,8 +148,13 @@ def update_figure(category, gametype, ranktype):
         df = df.sort_values(by=[category])
     colors = df['캐릭터-무기'].apply(lambda x: 'green' if x == '평균' else '636efa')
     
-    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category, marker_color=colors,
-                 title=date, height=1500)
+    fig = go.Figure(data=go.Bar(
+        x=df['category'], y=df['캐릭터-무기'], orientation='h', text=df['category'], title=date, height=1500, marker_color=colors
+        )
+    )
+    
+#    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category, marker_color=colors,
+#                 title=date, height=1500)
     
     fig.update_layout(transition_duration=500)
     fig.update_xaxes(showticklabels=False)
