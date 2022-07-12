@@ -147,7 +147,7 @@ def update_figure(category, gametype, ranktype):
         df = df.sort_values(by=[category])
     colors = df['캐릭터-무기'].apply(lambda x: 'green' if x == '평균' else '636efa')
     
-    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category, makrer_color=colors,
+    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category, marker_color=colors,
                  title=date, height=1500)
     
     fig.update_layout(transition_duration=500)
