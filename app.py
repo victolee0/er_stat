@@ -19,6 +19,7 @@ print("Define flask server")
 
 app.layout = html.Div(
     children=[
+        html.Title(children="ER-STAT"),
         # Top Banner
         html.Div(
             className="er-stat-banner row",
