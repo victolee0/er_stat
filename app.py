@@ -4,7 +4,6 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 from preprocessing import preprocessing
 import plotly.express as px
-import numpy as np
 import pandas as pd
 from crawl import crawl
 app = dash.Dash(
@@ -145,7 +144,7 @@ def update_figure(category, gametype, ranktype):
         df = df.sort_values(by=[category])
         df[category] = df[category].apply(lambda x: str(x) + '%')
     elif category == '평균 순위':
-        df[category] = df[category].astype(np.float)
+        df[category] = df[category].astype(float)
         df = df.sort_values(by=[category], ascending=False)
     else:
         df = df.sort_values(by=[category])
