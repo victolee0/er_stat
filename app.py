@@ -130,7 +130,7 @@ app.layout = html.Div(
      Input('rank-type', 'value')]
 )
 
-#todo: heroku deploy, footer
+#todo: avg bar, footer
 def update_figure(category, gametype, ranktype):
     type_dict = {'솔로': 0,
                  '듀오': 1,
@@ -145,8 +145,11 @@ def update_figure(category, gametype, ranktype):
         df[category] = df[category].apply(lambda x: str(x) + '%')
     else:
         df = df.sort_values(by=[category])
-    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category,
+    colors = df['캐릭터-무기'].apply(lambda x: 'green' if x == '평균' else '636efa')
+    
+    fig = px.bar(df, y='캐릭터-무기', x=category, orientation='h', text=category, color=colors,
                  title=date, height=1500)
+    
     fig.update_layout(transition_duration=500)
     fig.update_xaxes(showticklabels=False)
     fig.update_traces(textposition = 'outside')
