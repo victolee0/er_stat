@@ -139,7 +139,6 @@ def update_figure(category, gametype, ranktype):
     date, data = preprocessing(crawl_data, ranktype)
     print("data preprocessing success")
     df = pd.concat([data[category].iloc[:,type_dict[gametype]], data['캐릭터-무기']], axis=1)
-    df = df[df[category] != 0]
     if category in ['승률', '픽률']:
         df[category] = df[category].apply(lambda x: float(x.split('%')[0]))
         df = df.sort_values(by=[category])
